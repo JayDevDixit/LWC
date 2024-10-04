@@ -61,6 +61,7 @@ export default class DynamicFieldFetcher extends LightningElement {
 
 
     get haserror() {
+        console.log('Has error called');
         return this.errorMessage !== '';
     }
 
