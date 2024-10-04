@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Calculator" icon-name="standard:avatar">
+    <h1>User Information</h1>
+    <lightning-input label="FirstName" onchange={handleFirstName}></lightning-input>
+    <lightning-input label="LastName"  onchange={handleLastName} ></lightning-input>
+    <lightning-input label="Email" type="Email" onchange={handleEmail}></lightning-input>
+    <lightning-input label="Phone" type="Phone" onchange={handlePhone}></lightning-input>
+    <lightning-input label="Title" type="text" onchange={handleTitle}></lightning-input>
+    <lightning-button label="submit" onclick={submit} variant="brand" class="btn"></lightning-button>
+
+    <p class="Result">Result is : {k} </p>
+
+    </lightning-card>
+
+   </template>

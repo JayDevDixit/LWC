@@ -1,0 +1,25 @@
+<template>
+    <!-- Question 12 -->
+     <lightning-card title="Update Opportunity Close Date">
+      <div class="slds-m-around_medium">
+      <lightning-combobox 
+      name="opportunityPicklist"
+      label="Select an Opportunity"
+      value={value}
+      options={options}
+      onchange={handleChangePicklist}>
+      </lightning-combobox>
+
+        <lightning-input
+        label="Close Date"
+        type="Date"
+        value={closeDate}
+        onchange={handleDateChange}></lightning-input>
+
+        <lightning-button
+        varient="brand"
+        label="Save"
+        onclick={handleSave}></lightning-button>
+      </div>
+     </lightning-card>
+</template>

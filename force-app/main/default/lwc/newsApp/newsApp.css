@@ -1,0 +1,102 @@
+.image{
+    margin-top: 10px;
+    width: 290px;
+    z-index: 6;
+    object-fit: contain;
+    border-radius: 15px;
+}
+.heading{
+    margin: 5px;
+    font-size: 15px;
+    font-style: italic;
+}
+.input-box {
+    width: 30%;
+    margin: 5px;
+}
+
+.title {
+    font-size: 30px;
+    font-family: cursive;
+    font-weight: bold; /* Changed from font-style to font-weight */
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+p,h2,h3 {
+    color: white !important;
+    z-index: 2;
+}
+
+.item-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 100%; /* Make it responsive */
+}
+
+/* Updated card styles */
+.card {
+    width: 300px; /* Adjust the width to fit the layout */
+    height: auto; /* Let height adjust based on content */
+    background: #07182E;
+    position: relative;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.card h2, .card p {
+    z-index: 5;
+    color: black;
+    font-size: 1.2em;
+    text-align: center; /* Center the text */
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
+    height: 130%;
+    animation: rotBGimg 3s linear infinite;
+    transition: all 0.2s ease-in-out;
+}
+
+@keyframes rotBGimg {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    background: #07182E;
+    z-index: 1;
+    inset: 5px;
+    border-radius: 15px;
+}
+.card :hover{
+    cursor: pointer;
+    background: linear-gradient(135deg, #364a60, #384c6c);
+}
+.input-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.btn{
+    position: relative;
+    top: 10px;
+}

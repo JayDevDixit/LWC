@@ -1,0 +1,13 @@
+<template>
+    <div>  
+    </div>
+      <lightning-card title="GrandParent">
+        <lightning-button label="Reset" slot="actions" onclick={handleReset}></lightning-button>
+        <p class="slds-p-horizontal_small">Count of GrandChild Selected : {count}</p>
+        <p slot="footer">
+          <c-parent-status onchilds_changed={childsChanged}> </c-parent-status>
+        </p>
+      </lightning-card> 
+    </div>
+   </template>
+   

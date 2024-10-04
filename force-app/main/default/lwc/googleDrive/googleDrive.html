@@ -1,0 +1,37 @@
+<template>
+    <div class="btn-container"><lightning-button variant="brand" label="Fetch Data" onclick={fetchData} class="btn"></lightning-button></div>
+
+    <lightning-card title="Upload File">
+        <lightning-file-upload
+        label="Upload a File to Google Drive"
+        name="fileUploader"
+        record-id={recordId}
+        accept={acceptedFormats}
+        onuploadfinished={handleUploadFinished}>
+        </lightning-file-upload>
+    </lightning-card>
+
+    <lightning-card title="All Data From Google Drive">
+        <lightning-datatable class="custom-datatable"
+        key-field="id"
+        data={files}
+        columns={columns}
+        onrowaction={handleRowAction}>
+        </lightning-datatable>
+    </lightning-card>
+    
+
+<div class="container">
+    <template for:each={files} for:item="file">
+        <div class="card"  key={file.index} data-index={file.index}>
+            <img src={file.iconLink} alt="icon image">
+            <h1 class="heading">{file.name}</h1>
+            <iframe src={file.iframelink} width={file.iframeWidth} height={file.iframeHeight} class="iframe"></iframe>
+            <lightning-button variant="brand" label={file.status} onclick={openFile} data-index={file.index} class="btn"></lightning-button>
+        </div>
+    </template>
+</div>
+
+
+
+</template>

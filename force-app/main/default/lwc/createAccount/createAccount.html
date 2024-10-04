@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Create New Account">
+        <lightning-input label="Account Name" value={name} onchange={handleNameChange}></lightning-input>
+        <lightning-input label="Industry" value={industry} onchange={handleIndustryChange}></lightning-input>
+        <lightning-input label="Phone" value={phone} onchange={handlePhoneChange}></lightning-input>
+        <lightning-input label="Account Number" value={num} onchange={handleNumberChange}></lightning-input>
+        <lightning-input type="checkbox" checked={isChecked} label="Active" onchange={handleCheckbox}></lightning-input>
+
+        <lightning-button variant="brand" label="Create Account" onclick={handleCreateAccount}></lightning-button>
+    </lightning-card>
+</template>

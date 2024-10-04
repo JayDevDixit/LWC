@@ -1,0 +1,29 @@
+<template>
+    <lightning-combobox
+    name="AccountPicklist"
+    label="Select an Account"
+    value={selectedAccountId}
+    onchange={handleAccountChange}
+    options={accountOptions}>
+</lightning-combobox>
+
+    <template if:true={contacts}>
+        <lightning-card title="Related Contacts">
+        <lightning-datatable
+            key-field="id"
+            data={contacts}
+            columns={columnsContact}>
+        </lightning-datatable>
+    </lightning-card>
+    </template>
+
+    <template if:true={opportunity}>
+        <lightning-card title="Related Opportunity">
+        <lightning-datatable
+            key-field="id"
+            data={opportunity}
+            columns={columnsOpportunity}>
+        </lightning-datatable>
+    </lightning-card>
+    </template>
+</template>

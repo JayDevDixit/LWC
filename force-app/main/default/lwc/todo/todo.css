@@ -1,0 +1,25 @@
+.singleTodo{
+    /* background-color: red; */
+    border: 2px solid skyblue;
+    list-style: none;
+    font-size: 25px;
+    font-family: cursive;
+    font-weight: Bold;
+    padding: 15px;
+    margin-top: 15px;
+}
+li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.deletebtn{
+    color : red !important;
+}
+.completed{
+    background-color: green;
+}
+.buttons{
+    display: flex;
+    justify-content: flex-end;
+}

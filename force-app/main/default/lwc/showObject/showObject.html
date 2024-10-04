@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title="Select Object" icon-name="standard:custom_object">
+        <!-- Object Picklist -->
+        <lightning-combobox
+            name="ObjectPicklist"
+            label="Select an object"
+            placeholder="Select an object"
+            value={selectedObject}
+            options={options}
+            onchange={handleObjectChange}>
+        </lightning-combobox>
+
+        <!-- Field Picklist -->
+        <template if:true={fieldOptions}>
+            <lightning-combobox
+                name="FieldPicklist"
+                label="Select a Field"
+                placeholder="Select a Field"
+                value={selectedField}
+                options={fieldOptions}
+                onchange={handleFieldChange}>
+            </lightning-combobox>
+        </template>
+
+        <!-- Display selected field details -->
+        <template if:true={fieldDetails.apiName}>
+            <lightning-card title="Field Details">
+                <p>API Name: {fieldDetails.apiName}</p>
+                <p>Type: {fieldDetails.type}</p>
+            </lightning-card>
+        </template>
+    </lightning-card>
+</template>

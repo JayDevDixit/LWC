@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Upload Image" icon-name="custom:custom62">
+        <lightning-file-upload
+        label="Upload an image"
+        name="fileUploader"
+        record-id={recordId}
+        accept={acceptedFormats}
+        onuploadfinished={handleUploadFinished}>
+        </lightning-file-upload>
+        <template if:true={imageUrl}>
+            <img src={imageUrl} alt="fail to show image" style="width: 100%;height:auto;">
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Account List" icon-name="standard:account">
+    <lightning-input
+    label="Search by Account name"
+    value={searchKey}
+    onchange={handleChangeSearch}></lightning-input>
+    
+    <lightning-datatable
+    key-field="id"
+    data={accounts}
+    columns={columns}
+    onsort={handeSort}
+    sorted-by={sortedBy}
+    hide-checkbox-column="true"></lightning-datatable>
+</lightning-card>
+</template>

@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Count Opportunity and Sum Amount" icon-name="standard:opportunity">
+        <template if:true={opportunities.length}>
+            <h1>Total opportunities : {count}</h1>
+            <h1>Total Amount : {totalAmount}</h1>
+        </template>
+        <template if:false={opportunities.length}>
+            <h1>No opportunities found for this account</h1>
+        </template>
+    </lightning-card>
+</template>

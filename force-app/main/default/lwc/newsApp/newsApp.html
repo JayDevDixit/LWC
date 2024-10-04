@@ -1,0 +1,20 @@
+<template>
+    <div class="input-container">
+    <lightning-input class="input-box" value={topic} onchange={handleTopicChange} placeholder={topic}></lightning-input>
+    <lightning-button variant="brand" label="Search" onclick={handleClick} class="btn"></lightning-button>
+</div>
+    
+    <div class="item-container">
+        <template for:each={info} for:item="item">
+            <div key={item.id} class="card" data-index={item.id} onclick={redirect}>
+                <img src={item.image} alt="Cannot display image" class="image">
+                <h2 class="title">{item.title}</h2>
+                <h3 class="heading">------------Description------------</h3>
+                <p>{item.description}</p>
+                <h3 class="heading">------------Content------------</h3>
+                <p>{item.content}</p><br>
+                <p>{item.publishedAt}</p>
+            </div>
+        </template>
+    </div>
+</template>

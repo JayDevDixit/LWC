@@ -1,0 +1,34 @@
+<template>
+    <lightning-card title={objectApiName}>
+        <template if:true={haserror}>
+            <div class="slds-text-color_error">
+                <p>{errorMessage}</p>
+            </div>
+        </template>
+        <template if:true={obectApiName} if:false={hasfields && haserror}>
+            <p>No fields to display. Check if fields name are valid</p>
+        </template>
+
+    <lightning-datatable 
+    key-field="id"
+    data={paginatedData}
+    columns={columns}
+    oncellchange={handleCellChange}
+    hide-checkbox-column
+    hide-row-number-column>
+    </lightning-datatable>
+
+    <div class="pagination-controls">
+        <lightning-button icon-name="utility:back" icon-position="left" label="Previous" onclick={previousPage} variant="success" disabled={isFirstPage} style="position:relative;top:12px;"></lightning-button>
+        <span class="pageinfo" style="position:relative;top:12px;">Page {currentPage} of {totalPages}</span>
+        <lightning-button icon-name="utility:forward" icon-position="right" label="Next" onclick={nextPage} variant="success" disabled={isLastPage} style="position:relative;top:12px;"></lightning-button>
+        <div class="input">
+        <lightning-input label="Page Number" value={currentPage} onchange={handlePageChange} placeholder="Enter page number" class="pageNo"></lightning-input>
+        <template if:true={pageErrorMessage}>
+            <span class="slds-text-color_error ">{pageErrorMessage}</span>
+        </template>
+        </div>
+    </div>
+</lightning-card>
+
+</template>

@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Todo App" icon-name="standard:avatar">
+    <h1>Todo App</h1>
+    
+    <lightning-input label="todo" onchange={handleTodo}></lightning-input>
+    <lightning-button label="submit" onclick={submitTodo} variant="brand" class="btn"></lightning-button>
+    <div class="container">
+            <div for:each={todos} for:item="todo" key={todo.id} for:index="index">
+                <li class="singleTodo">
+                    <p>{todo.name}</p>
+                    <div class="buttons">
+                    <lightning-button label="Complete" onclick={completeTodo} data-index={index} variant="success" class="btn"></lightning-button>
+                    <lightning-button label="Delete" onclick={deleteTodo} data-index={index} variant="destructive" class="btn"></lightning-button>
+                </div>
+                   
+                </li>
+        </div>
+    </div>
+
+    <p class="Result"></p>
+
+    </lightning-card>
+
+   </template>

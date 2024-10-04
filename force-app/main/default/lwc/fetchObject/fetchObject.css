@@ -1,0 +1,22 @@
+.pagination-controls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pageNo{
+    width: 50%;
+    margin-top: 0;
+}
+.pageinfo{
+    margin: 15px;
+
+}
+.input{ 
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+    width: 15%;
+    position: absolute;
+    right: 30px;
+}

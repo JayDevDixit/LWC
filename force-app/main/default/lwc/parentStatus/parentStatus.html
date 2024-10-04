@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Parent">
+      <p>{childSelected}</p>
+      <div
+        class="slds-grid slds-gutters"
+        onchild_selected={handleSelected}
+        onchild_deselected={handleDeselected}
+      >
+        <div class="slds-col">
+          <span><c-child-button> </c-child-button></span>
+        </div>
+        
+      </div>
+    </lightning-card>
+   </template>
+   

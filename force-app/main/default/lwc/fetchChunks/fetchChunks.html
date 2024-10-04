@@ -1,0 +1,26 @@
+<template>
+    <lightning-card title={objectApiName}>
+        <template if:true={haserror}>
+            <div class="slds-text-color_error">
+                <p>{errorMessage}</p>
+            </div>
+        </template>
+        <template if:true={obectApiName} if:false={hasfields && haserror}>
+            <p>No fields to display. Check if fields name are valid</p>
+        </template>
+<div class="datatable-container">
+    <lightning-datatable 
+    key-field="id"
+    data={data}
+    columns={columns}
+    is-loading={isLoading}
+    oncellchange={handleCellChange}
+    hide-checkbox-column
+    hide-row-number-column
+    enable-infinite-loading="true"
+    onloadmore={loadMoreData}>
+    </lightning-datatable>
+</div>
+</lightning-card>
+
+</template>

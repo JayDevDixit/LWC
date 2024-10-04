@@ -1,0 +1,24 @@
+<template>
+    <div class="slds-box">
+      <p>Child  1</p>
+      <template lwc:if={buttonNotSelected}>
+        <lightning-button
+          variant="brand"
+          label="select"
+          title="Primary action"
+          onclick={handleClickSelect}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </template>
+      <template lwc:else>
+        <lightning-button
+          variant="destructive-text"
+          label="Deselect"
+          title="Destructive action with a lighter look"
+          onclick={handleClickDeselect}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </template>
+    </div>
+   </template>
+   

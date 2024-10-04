@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Calculator" icon-name="standard:avatar">
+    <h1>Calculator</h1>
+    <lightning-input label="Value 1" onchange={handleValue1}></lightning-input>
+    <lightning-input label="Value 2"  onchange={handleValue2} ></lightning-input>
+    <lightning-button label="+" onclick={add} variant="brand" class="btn"></lightning-button>
+    <lightning-button label="-" onclick={subtract} variant="brand" class="btn"></lightning-button>
+    <lightning-button label="*" onclick={multiply} variant="brand" class="btn"></lightning-button>
+    <p>Result is : {result}</p>
+
+    </lightning-card>
+
+   </template>

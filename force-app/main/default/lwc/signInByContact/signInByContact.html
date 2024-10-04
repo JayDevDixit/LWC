@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="login">
+        <lightning-input
+        label="Username"
+        value={username}
+        onchange={handleChangeUsername}></lightning-input>
+
+        <lightning-input
+        label="Password"
+        value={password}
+        onchange={handleChangePassword}
+        type="password"></lightning-input>
+
+        <lightning-button
+        label="Login"
+        onclick={handleLogin}
+        variant="brand"></lightning-button>
+    </lightning-card>
+</template>
