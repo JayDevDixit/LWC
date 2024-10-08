@@ -5,7 +5,7 @@
                 <p>{errorMessage}</p>
             </div>
         </template>
-        <template if:true={obectApiName} if:false={hasfields && haserror}>
+        <template if:true={objectApiName} if:false={hasfields && haserror}>
             <p>No fields to display. Check if fields name are valid</p>
         </template>
 
@@ -13,7 +13,9 @@
     key-field="id"
     data={paginatedData}
     columns={columns}
-    oncellchange={handleCellChange}
+    onsave={handleSave}
+    draft-values={saveDraftValues}
+    oncancel={handleCancel}
     hide-checkbox-column
     hide-row-number-column>
     </lightning-datatable>

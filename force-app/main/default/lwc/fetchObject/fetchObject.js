@@ -1,12 +1,21 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import fetchRecords from '@salesforce/apex/FetchObjectField.fetchRecords';
+import { updateRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
 
 export default class DynamicFieldFetcher extends LightningElement {
     @api objectApiName;
     @api fieldApiNames;
     @api fieldList;
-    @track columns = [{label: 'Row Number', fieldName: 'rowNumber', type: 'number'}];
+    @track columns = [{label: 'Row Number', fieldName: 'rowNumber', type: 'number'},{
+        label: 'Id',
+        fieldName: 'Id',
+        type: 'text',
+        editable: false,
+        hidden: true // keep it hidden if you don’t want it visible
+    }];
     @track data = [];
 
     @track paginatedData = [];
@@ -14,6 +23,8 @@ export default class DynamicFieldFetcher extends LightningElement {
     @track recordsPerPage = 5;
     @track totalPages = 0;
     @track pageErrorMessage = '';
+    @track saveDraftValues = [];
+    // @track showSpinner = false;
 
     objectError;
     objectInfo;
@@ -73,7 +84,7 @@ export default class DynamicFieldFetcher extends LightningElement {
     fetchRecords() {
         fetchRecords({ fieldNames: this.fieldList,objectName: this.objectApiName})
             .then(result => {
-                this.data = result;
+                this.data = result || [];
                 this.totalPages = Math.ceil(this.data.length / this.recordsPerPage);
                 this.error = undefined;
                 console.log(this.data);
@@ -84,6 +95,7 @@ export default class DynamicFieldFetcher extends LightningElement {
                 this.contacts = undefined;
                 this.error = error.body.message; 
                 console.log(this.error);
+                this.data = undefined;
             });
     }
 
@@ -124,6 +136,46 @@ export default class DynamicFieldFetcher extends LightningElement {
         }else if(event.target.value===0 || event.target.value !==''){
             this.pageErrorMessage = 'Invalid Input';
         }
+    }
+    async handleSave(event){
+        console.log('Handle save')
+        this.saveDraftValues = event.detail.draftValues;
+        console.log('draftvaluse',this.saveDraftValues)
+        const recordInputs = this.saveDraftValues.slice().map(draft =>{
+            const fields = Object.assign({}, draft);
+            console.log('map');
+            return { fields: { Id: '001dM00000HMO8MQAX', 'Contact_Count__c':fields['Contact_Count__c'] } };
+        });
+        console.log('records input',JSON.stringify(recordInputs));
+        //this.showSpinner = true;
+        const promises = recordInputs.map(recordInput => updateRecord(recordInput));
+        await Promise.all(promises).then(res => {
+            this.showToast('Success', 'Records Updated Successfully!', 'success', 'dismissable');
+            this.draftValues = [];
+            //this.showSpinner=false;
+            // return this.refresh();
+        }).catch(error => {
+            this.showToast('Error', 'An Error Occured!!', 'error', 'dismissable');
+            console.log('error = ',error);
+            //this.showSpinner=false;
+        }).finally(() => {
+            // this.showSpinner=false;
+            this.draftValues = [];
+        });
+    }
+    showToast(title, message, variant) {
+        const evt = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+        });
+        this.dispatchEvent(evt);
+    }
+    async refresh() {
+        await refreshApex(this.data);
+    }
+    handleCancel(event){
+        event.detail.draftValues = '';
     }
 
 }

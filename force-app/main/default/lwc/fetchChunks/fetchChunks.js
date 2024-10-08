@@ -13,7 +13,8 @@ export default class DynamicFieldFetcher extends LightningElement {
     @track paginatedData = [];
     @track pageErrorMessage = '';
     @track limitval = 30;
-    @track totalRecordsFetched = 0;
+    @track lastRecordId = null;
+    @track lastModifiedDate = null;
 
     objectError;
     objectInfo;
@@ -37,31 +38,25 @@ export default class DynamicFieldFetcher extends LightningElement {
         this.fields = [];
         if (this.fieldApiNames) {
             this.fieldList = this.fieldApiNames.split(',').map(field => field.trim());
-            console.log('fieldList->', this.fieldList);
-
-
 
             this.fieldList.forEach(field => {
                 if (this.objectInfo.fields[field]) {
                     this.fields.push(this.objectInfo.fields[field].label);
 
-                    // After field is validate add it into datatable
+                    // After field is validated, add it into the datatable
                     this.columns = [...this.columns, { label: this.objectInfo.fields[field].label, fieldName: field, editable: true }];
                 } else {
                     this.errorMessage += `Field "${field}" does not exist on object "${this.objectApiName}".`;
                 }
             });
 
-            if (!this.errorMessage)
-                this.loadData(0);  // Call the Apex method after validating fields means no error message
-
+            if (!this.errorMessage) {
+                this.loadData();  // Call the Apex method after validating fields if no error message
+            }
         }
-
     }
 
-
     get haserror() {
-        console.log('Has error called');
         return this.errorMessage !== '';
     }
 
@@ -69,53 +64,36 @@ export default class DynamicFieldFetcher extends LightningElement {
         return !this.haserror && this.fields.length > 0;
     }
 
-
     loadData() {
-        if (this.isLoading) { return; }
-        else {
-            this.isLoading = true;
-            fetchInChunks({ fieldNames: this.fieldList, objectName: this.objectApiName, offsetval: this.totalRecordsFetched, limitval: this.limitval })
-                .then(result => {
-                    this.totalRecordsFetched += this.limitval;
+        if (this.isLoading) return;
+        
+        this.isLoading = true;
+        fetchInChunks({
+            fieldNames: this.fieldList,
+            objectName: this.objectApiName,
+            lastRecordId: this.lastRecordId,
+            limitval: this.limitval,
+            lastModifiedDate:this.lastModifiedDate
+        })
+            .then(result => {
+                if (result.length > 0) {
+                    this.lastRecordId = result[result.length - 1].Id; // Track last record's Id
+                    this.lastModifiedDate = result[result.length - 1].LastModifiedDate; // Track last modified date
                     this.data = [...this.data, ...result];
-                    this.error = undefined;
-                    this.isLoading = false;
-                    console.log('inside fetch in chunk .then')
-
-                })
-                .catch(error => {
-                    this.error = error.body.message;
-                    console.log(error.message);
-                    this.isLoading = false;
-                    console.log('inside fetch in chunk .catch')
-
-                });
-        }
-    }
-
-
-    get isFirstPage() {
-        return this.currentPage == 1;
-    }
-    get isLastPage() {
-        return this.currentPage == this.totalPages;
+                    console.log('Date= ',this.lastModifiedDate)
+                }
+                this.isLoading = false;
+            })
+            .catch(error => {
+                this.errorMessage = error.body.message;
+                this.isLoading = false;
+            });
     }
 
     async loadMoreData(event) {
-        console.log('inside loadmoredata')
         const { target } = event;
         target.isLoading = true;
-        console.log('inside loadmoredata', target)
         await this.loadData();
-        // .then(()=> {
-        //     target.isLoading = false;
-        //     console.log('loaded data .then')
-        // }).catch(error=>{
-        //     target.isLoading = false;
-        //     console.log('loaded data .catch', error);
-        // });   
-
-
+        target.isLoading = false;
     }
-
 }

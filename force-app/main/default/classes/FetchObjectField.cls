@@ -7,10 +7,25 @@ public with sharing class FetchObjectField {
     }
 
     @AuraEnabled(cacheable = true)
-    public static list<sObject> fetchInChunks(list<string>fieldNames,string objectName,integer offsetval,integer limitval ){
-        string query = 'SELECT '+String.join(fieldNames,', ')+' FROM '+objectName+' limit '+limitval+' OFFSET '+offsetval;
-        system.debug(query);
-        list<sObject> records = Database.query(query);
+    public static List<SObject> fetchInChunks(
+        List<String> fieldNames,
+        String objectName,
+        String lastRecordId,
+        Integer limitval,
+        Datetime lastModifiedDate
+    ) {
+        String query = 'SELECT lastModifiedDate, ' + String.join(fieldNames, ', ') + ' FROM ' + objectName;
+        // if (lastRecordId != null && lastRecordId != '') {
+        //     query += ' WHERE Id > :lastRecordId';
+        // }
+        if (lastModifiedDate != null) {
+            query += ' WHERE lastModifiedDate > :lastModifiedDate';
+        }
+        query += ' ORDER BY lastModifiedDate desc LIMIT ' + limitval;
+        
+        System.debug('Query: ' + query);
+
+        List<SObject> records = Database.query(query);
         return records;
-    } 
+    }
 }
