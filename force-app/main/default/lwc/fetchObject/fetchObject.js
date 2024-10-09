@@ -9,14 +9,9 @@ export default class DynamicFieldFetcher extends LightningElement {
     @api objectApiName;
     @api fieldApiNames;
     @api fieldList;
-    @track columns = [{label: 'Row Number', fieldName: 'rowNumber', type: 'number'},{
-        label: 'Id',
-        fieldName: 'Id',
-        type: 'text',
-        editable: false,
-        hidden: true // keep it hidden if you don’t want it visible
-    }];
+    @track columns = [{label: 'Row Number', fieldName: 'rowNumber', type: 'number'}];
     @track data = [];
+    @track mapper = {};
 
     @track paginatedData = [];
     @track currentPage = 1;
@@ -24,7 +19,6 @@ export default class DynamicFieldFetcher extends LightningElement {
     @track totalPages = 0;
     @track pageErrorMessage = '';
     @track saveDraftValues = [];
-    // @track showSpinner = false;
 
     objectError;
     objectInfo;
@@ -51,13 +45,31 @@ export default class DynamicFieldFetcher extends LightningElement {
             console.log('fieldList->', this.fieldList);
 
             
-
             this.fieldList.forEach(field => {
                 if (this.objectInfo.fields[field]) {
                     this.fields.push(this.objectInfo.fields[field].label);
 
                     // After field is validate add it into datatable
-                    this.columns.push({label:this.objectInfo.fields[field].label,fieldName:field,editable:true})
+                    console.log('->',this.objectInfo.fields[field])
+                    if(this.objectInfo.fields[field].dataType == 'Picklist'){
+                        console.log('Sett picklist')
+
+                        this.columns.push({label:this.objectInfo.fields[field].label,fieldName:field,editable:this.objectInfo.fields[field].updateable,type:'picklist',
+                            typeAttributes:{
+                                placeholder:'Select a value',
+                                options:[
+                                    {label: 'Yes',value:'Yes'},
+                                    {label: 'No',value:'No'}
+                                ],
+                                value:{fieldName:field},
+                                wrapText:true,
+                            }
+                        })
+                    }
+                    else{
+
+                        this.columns.push({label:this.objectInfo.fields[field].label,fieldName:field,editable:this.objectInfo.fields[field].updateable})
+                    }
                     this.columns = [...this.columns];
                 } else {
                     this.errorMessage+= `Field "${field}" does not exist on object "${this.objectApiName}".`;
@@ -105,6 +117,7 @@ export default class DynamicFieldFetcher extends LightningElement {
         this.paginatedData = this.data.slice(start, end).map((row,index)=>{
             return {...row,rowNumber:start+index+1 }
         });
+     
         
     }
     previousPage(){
@@ -140,20 +153,24 @@ export default class DynamicFieldFetcher extends LightningElement {
     async handleSave(event){
         console.log('Handle save')
         this.saveDraftValues = event.detail.draftValues;
+        console.log('target',event.detail)
         console.log('draftvaluse',this.saveDraftValues)
-        const recordInputs = this.saveDraftValues.slice().map(draft =>{
-            const fields = Object.assign({}, draft);
-            console.log('map');
-            return { fields: { Id: '001dM00000HMO8MQAX', 'Contact_Count__c':fields['Contact_Count__c'] } };
+        const recordInputs = this.saveDraftValues.map(draft =>{
+            // const fields = Object.assign({}, draft);
+            let fields = draft;
+            let index = draft['id'].substring(4);
+            index = +index;
+            fields.Id = this.paginatedData[index].Id;
+            delete fields['id'];
+            console.log('draft id = ',fields.id,index,this.paginatedData[index]);
+            return { fields: { ...fields } };
         });
         console.log('records input',JSON.stringify(recordInputs));
         //this.showSpinner = true;
         const promises = recordInputs.map(recordInput => updateRecord(recordInput));
         await Promise.all(promises).then(res => {
             this.showToast('Success', 'Records Updated Successfully!', 'success', 'dismissable');
-            this.draftValues = [];
-            //this.showSpinner=false;
-            // return this.refresh();
+            this.refresh();
         }).catch(error => {
             this.showToast('Error', 'An Error Occured!!', 'error', 'dismissable');
             console.log('error = ',error);
@@ -161,6 +178,7 @@ export default class DynamicFieldFetcher extends LightningElement {
         }).finally(() => {
             // this.showSpinner=false;
             this.draftValues = [];
+            this.saveDraftValues = [];
         });
     }
     showToast(title, message, variant) {
@@ -173,6 +191,7 @@ export default class DynamicFieldFetcher extends LightningElement {
     }
     async refresh() {
         await refreshApex(this.data);
+        this.fetchRecords();
     }
     handleCancel(event){
         event.detail.draftValues = '';

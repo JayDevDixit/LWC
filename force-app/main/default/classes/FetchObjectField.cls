@@ -1,6 +1,7 @@
 public with sharing class FetchObjectField {
     @AuraEnabled
     public static list<sObject> fetchRecords(list<string>fieldNames,string objectName){
+        system.debug(fieldNames);
         string query = 'SELECT '+String.join(fieldNames,', ')+' From '+objectName;
         List<sObject> records = Database.query(query);
         return records;
