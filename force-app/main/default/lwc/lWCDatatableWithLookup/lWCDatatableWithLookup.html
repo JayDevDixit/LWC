@@ -1,0 +1,30 @@
+<template>
+ 
+    <!-- create folder card -->
+    <lightning-card  variant="Narrow"  title="Lookup Field In LWC Inline Datatable Edit" icon-name="standard:folder" class="cardSpinner">
+        <!-- loader -->
+        <div if:true={showSpinner}>
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+        
+        <div class="slds-var-p-around_small">
+            <template if:true={data}>
+                <c-l-w-c-lookup-custom-datatable-type
+                    class="slds-max-medium-table_stacked"
+                    key-field="Id"
+                    data={data} 
+                    columns={columns} 
+                    onlookupchanged={lookupChanged} 
+                    onvalueselect={handleSelection}
+                    draft-values={draftValues} 
+                    oncellchange={handleCellChange}
+                    onsave={handleSave}
+                    oncancel={handleCancel}
+                    hide-checkbox-column>
+                </c-l-w-c-lookup-custom-datatable-type>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -12,6 +12,7 @@ export default class DynamicFieldFetcher extends LightningElement {
     @track columns = [{label: 'Row Number', fieldName: 'rowNumber', type: 'number'}];
     @track data = [];
     @track mapper = {};
+    @track accountId;
 
     @track paginatedData = [];
     @track currentPage = 1;
@@ -35,6 +36,13 @@ export default class DynamicFieldFetcher extends LightningElement {
             this.fields = [];
             this.errorMessage = 'Object API Name '+this.objectApiName+' is invalid';
         }
+    }
+    handleAccountIdChange(event) {
+        this.record.AccountId = event.detail;
+    }
+    handleAccountSelected(event) {
+        this.accountId = event.detail.accountId;
+        // You can also store the selected account name or do further processing here
     }
 
     validateFields() {
