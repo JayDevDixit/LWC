@@ -1,0 +1,26 @@
+<template>
+    <lightning-card class="card">
+        <lightning-modal-header label="My Modal Heading"></lightning-modal-header>
+        <lightning-modal-body>
+            <template for:each={options} for:item="option">
+                <lightning-progress-ring key={option.id} value="75" variant="base-autocomplete"></lightning-progress-ring>
+                <lightning-button key={option.id} data-id={option.id} onclick={handleOptionClick} label={option.label}>
+                    {option.label}
+                </lightning-button><br key={option.id}>
+            </template>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+        </lightning-modal-footer>
+    </lightning-card>
+</template>
+
+
+<!-- <lightning-progress-ring value="75" variant="base-autocomplete"></lightning-progress-ring>
+<lightning-button label="Comp 1" onclick={handleClick} aria-haspopup="dialog"></lightning-button><br>
+<lightning-progress-ring value="75" variant="base-autocomplete"></lightning-progress-ring>
+<lightning-button label="Comp 2" onclick={handleClick} aria-haspopup="dialog"></lightning-button><br>
+<lightning-progress-ring value="75" variant="base-autocomplete"></lightning-progress-ring>
+<lightning-button label="Comp 3" onclick={handleClick} aria-haspopup="dialog"></lightning-button><br>
+<lightning-progress-ring value="75" variant="base-autocomplete"></lightning-progress-ring>
+<lightning-button label="Comp 4" onclick={handleClick} aria-haspopup="dialog"></lightning-button> -->
