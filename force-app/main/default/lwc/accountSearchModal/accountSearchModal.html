@@ -1,0 +1,19 @@
+<template>
+    <lightning-modal
+        header="Select Account"
+        onclose={closeModal}
+    >
+        <lightning-input
+            label="Search Account"
+            value={searchKey}
+            onchange={handleSearchChange}
+        ></lightning-input>
+        <lightning-datatable
+            data={filteredAccounts}
+            columns={columns}
+            key-field="Id"
+            onrowaction={handleRowAction}
+        ></lightning-datatable>
+        <lightning-button variant="neutral" label="Close" onclick={closeModal}></lightning-button>
+    </lightning-modal>
+</template>

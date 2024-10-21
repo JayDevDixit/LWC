@@ -1,0 +1,51 @@
+<template>
+    <lightning-card>
+        <!-- Chat section with background image -->
+        <section role="log" class="slds-chat chat-background" style="overflow-y: scroll; height:500px;">
+            <ul class="slds-chat-list">
+                <template for:each={sentMessages} for:item="message">
+                <template if:false={message.isSent}>
+                <li key={message.id} class="slds-chat-listitem slds-chat-listitem_inbound">
+                    <div class="slds-chat-message">
+                        <span aria-hidden="true" class="slds-avatar slds-avatar_circle slds-chat-avatar">
+                            <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Andy Martinez">JD</abbr>
+                        </span>
+                        <div class="slds-chat-message__body">
+                            <div class="slds-chat-message__text slds-chat-message__text_inbound">
+                                <span>
+                                    <lightning-formatted-rich-text value={message.Message_Content__c}></lightning-formatted-rich-text>
+                                </span>
+                            </div>
+                            <div class="slds-chat-message__meta">{message.Name} • {message.formattedTime}</div>
+                        </div>
+                    </div>
+                </li>
+            </template>
+
+            <template if:true={message.isSent}>
+                <li key={message.id} class="slds-chat-listitem slds-chat-listitem_outbound">
+                    <div class="slds-chat-message">
+                        <span aria-hidden="true" class="slds-avatar slds-avatar_circle slds-chat-avatar">
+                            <abbr class="slds-avatar__initials slds-avatar__initials_inverse" title="Andy Martinez" style="margin-left: 0;">TU</abbr>
+                        </span>
+                        <div class="slds-chat-message__body">
+                            <div class="slds-chat-message__text slds-chat-message__text_outbound-agent">
+                                <span>
+                                    <lightning-formatted-rich-text value={message.Message_Content__c}></lightning-formatted-rich-text>
+                                </span>
+                            </div>
+                            <div class="slds-chat-message__meta">{message.Name} • {message.formattedTime}</div>
+                        </div>
+                    </div>
+                </li>
+            </template>
+            </template>
+            </ul>
+        </section>
+        <!-- Message input section -->
+        <div class="message-input">
+            <lightning-input class="textarea" name="input" label="Enter Message" placeholder="Type here..." onchange={handleChange} value={msg}></lightning-input>
+            <lightning-button class="btn" label="Send Message" onclick={handleClick} variant="brand"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

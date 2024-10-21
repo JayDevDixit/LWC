@@ -1,0 +1,14 @@
+*{
+    margin:10px;
+}
+/* Background for the chat section */
+.chat-background {
+    background-image: url('/resource/whatsapplightbackground'); /* Replace with your Static Resource name */
+    background-size: cover; /* Make sure the background covers the entire container */
+    background-position: center;
+    padding: 10px;
+    border-radius: 8px; /* Smooth borders */
+    border: 1px solid #e0e0e0;
+}
+
+
