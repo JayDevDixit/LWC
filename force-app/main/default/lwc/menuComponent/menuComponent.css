@@ -1,3 +1,82 @@
-/* .menu-btn{
-    margin-left: 85vw;
-} */
+.slds-modal__container {
+    width: 20rem;
+}
+
+.logo {
+    width: 80px;
+    height: 40px;
+}
+
+.slds-progress-ring__progress {
+    stroke-dasharray: 80, 100;
+}
+
+.list-item:hover {
+    background-color: rgb(0, 123, 255);
+    color: white;
+    cursor: pointer;
+}
+
+.list-item {
+    color: rgb(0, 123, 255);
+    display: flex;
+    justify-content: flex-start;
+}
+
+button {
+    margin-left: 10px;
+}
+
+.font {
+    font-weight: bold;
+}
+
+li {
+    margin: 0;
+}
+
+button:hover {
+    color: white;
+}
+
+.slds-list_dotted {
+    margin-top: 0.5rem;
+    margin-left: 2rem;
+}
+.arrow{
+    color:white;
+}
+/* Remove outline and shadow on button focus */
+button.slds-button_neutral {
+    outline: none;
+    box-shadow: none;
+    border: none; /* Optionally remove any border */
+}
+
+/* Optional: To preserve focus outline for accessibility when using keyboard (not mouse clicks) */
+button.slds-button_neutral:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Remove focus outline when right-clicked or focused using a mouse */
+button.slds-button_neutral:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.sub-section-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+.shadow-effect {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.shadow-effect:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
+}

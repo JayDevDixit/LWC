@@ -1,7 +1,63 @@
 <template>
-    <lightning-card>
-    <lightning-button class= 'menu-btn' label={buttonLabel} onclick={handleClick}></lightning-button>
-    <template if:true={showMenu}>
+    <lightning-button label="Menu" onclick={handleOpenModal}></lightning-button>
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCloseModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <img src="https://img.favpng.com/22/18/3/logo-organization-american-red-cross-symbol-international-red-cross-and-red-crescent-movement-png-favpng-yybFKPPEAWxcG9f2bdt4njtw7.jpg" alt="American Red Cross logo" class="logo">
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-text-heading_medium">American Red Cross</h2>
+                            <p>RC Care</p>
+                        </div>
+                    </div>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-progress-ring slds-progress-ring_large">
+                        <div class="slds-progress-ring__progress" style="stroke-dasharray: 80, 100;">
+                            <svg viewBox="-1 -1 2 2">
+                                <circle cx="0" cy="0" r="1"></circle>
+                            </svg>
+                        </div>
+                        <div class="slds-progress-ring__content">
+                            <lightning-icon icon-name="utility:check" alternative-text="Complete" size="small"></lightning-icon>
+                        </div>
+                    </div>
+                    <div class="slds-p-around_medium">
+                        <div class="slds-text-heading_small">Gracie Hudson</div>
+                        <div class="slds-text-body_small">Draft in progress saved</div>
+                    </div>
+                    <ul class="slds-list_vertical slds-has-dividers_top-space">
+                        <template for:each={sections} for:item="section">
+                            <li key={section.id} class="slds-item list-item font">
+                                    <lightning-progress-ring value={section.progress} variant="active-step"></lightning-progress-ring>
+                                    <button class="slds-button slds-button_neutral slds-button_full-width" onclick={toggleExpand} data-id={section.id}>
+                                        {section.label}
+                                        <lightning-icon icon-name={section.icon} size="xx-small" class="slds-float_right arrow"></lightning-icon>
+                                    </button>
+                            </li>
+                            <template if:true={section.isExpanded}>
+                                <template for:each={section.subSections} for:item="section">
+                                    <li key={section.label} class="slds-item list-item font sub-section-item shadow-effect">
+                                        <lightning-progress-ring value={section.progress} variant="active-step"></lightning-progress-ring>
+                                        <button class="slds-button slds-button_neutral slds-button_full-width" onclick={toggleExpand} data-id={section.id}>
+                                            {section.label}</button>
+                                    </li>
+
+                                </template>
+                            </template>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
-</lightning-card>
 </template>
