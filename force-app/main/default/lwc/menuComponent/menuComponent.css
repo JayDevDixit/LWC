@@ -80,3 +80,47 @@ button.slds-button_neutral:focus {
 .shadow-effect:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.15);
 }
+/* Styling for the main menu components */
+.list-item {
+    color: rgb(0, 123, 255);
+    display: flex;
+    justify-content: flex-start;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Styling for subsections to differentiate from the main menu */
+.sub-section-item {
+    padding: 12px;
+    margin: 8px 0;
+    background-color: #f3f3f3; /* Light background for subsections */
+    border-left: 4px solid rgb(0, 123, 255); /* Distinct border to stand out */
+    border-radius: 6px;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+/* Add shadow effect for subsections */
+.sub-section-item.shadow-effect {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add hover effect for subsections */
+.sub-section-item:hover {
+    background-color: rgb(0, 123, 255);
+    cursor: pointer;
+}
+
+/* Different hover effect for subsection buttons */
+.sub-section-item button:hover {
+    color: white;
+    /* background-color: white; */
+}
+
+/* Progress ring for subsections */
+.sub-section-item lightning-progress-ring {
+    margin-right: 10px;
+}

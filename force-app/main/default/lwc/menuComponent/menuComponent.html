@@ -1,5 +1,14 @@
 <template>
     <lightning-button label="Menu" onclick={handleOpenModal}></lightning-button>
+    <lightning-combobox
+            name="progress"
+            label="Status"
+            value={selectedLanguage}
+            placeholder="Select Progress"
+            options={languages}
+            onchange={handleLanguageChange} ></lightning-combobox>
+
+    <p>Selected value is: {value}</p>
 
     <template if:true={isModalOpen}>
         <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
@@ -35,20 +44,20 @@
                         <div class="slds-text-body_small">Draft in progress saved</div>
                     </div>
                     <ul class="slds-list_vertical slds-has-dividers_top-space">
-                        <template for:each={sections} for:item="section">
-                            <li key={section.id} class="slds-item list-item font">
-                                    <lightning-progress-ring value={section.progress} variant="active-step"></lightning-progress-ring>
-                                    <button class="slds-button slds-button_neutral slds-button_full-width" onclick={toggleExpand} data-id={section.id}>
-                                        {section.label}
-                                        <lightning-icon icon-name={section.icon} size="xx-small" class="slds-float_right arrow"></lightning-icon>
+                        <template for:each={MenuComponents} for:item="MenuComponent">
+                            <li key={MenuComponent.id} class="slds-item list-item font">
+                                    <lightning-progress-ring value={MenuComponents.progress} variant="active-step"></lightning-progress-ring>
+                                    <button class="slds-button slds-button_neutral slds-button_full-width" onclick={toggleExpand} data-id={MenuComponent.id}>
+                                        {MenuComponent.label}
+                                        <lightning-icon icon-name={MenuComponent.icon} size="xx-small" class="slds-float_right arrow"></lightning-icon>
                                     </button>
                             </li>
-                            <template if:true={section.isExpanded}>
-                                <template for:each={section.subSections} for:item="section">
-                                    <li key={section.label} class="slds-item list-item font sub-section-item shadow-effect">
-                                        <lightning-progress-ring value={section.progress} variant="active-step"></lightning-progress-ring>
-                                        <button class="slds-button slds-button_neutral slds-button_full-width" onclick={toggleExpand} data-id={section.id}>
-                                            {section.label}</button>
+                            <template if:true={MenuComponent.isExpanded}>
+                                <template for:each={MenuComponent.subSections} for:item="MenuComponent">
+                                    <li key={MenuComponent.label} class="slds-item list-item font sub-section-item shadow-effect">
+                                        <lightning-progress-ring value={MenuComponent.progress} variant="active-step"></lightning-progress-ring>
+                                        <button class="slds-button slds-button_neutral slds-button_full-width" onclick={toggleExpand} data-id={MenuComponent.id}>
+                                            {MenuComponent.label}</button>
                                     </li>
 
                                 </template>

@@ -1,63 +1,50 @@
 import { LightningElement, track } from 'lwc';
-import fetchMenu from '@salesforce/apex/fetchMetadata.fetchMenu';
-import fetchSubSection from '@salesforce/apex/fetchMetadata.fetchSubSection';
+import fetchMenuWithSubSections from '@salesforce/apex/fetchMetadata.fetchMenuWithSubSections';
 export default class ModalComponent extends LightningElement {
     @track isModalOpen = false;
-    @track sections = [
+    @track languages =  [
+        { label: 'English', value: 'en' },
+        { label: 'German', value: 'de' },
+        { label: 'French', value: 'fr' },
+        { label: 'Spanish', value: 'es' },
+        { label: 'Italian', value: 'it' },
+        { label: 'Portuguese', value: 'pt' },
+        { label: 'Chinese (Simplified)', value: 'zh-CN' },
+        { label: 'Chinese (Traditional)', value: 'zh-TW' },
+        { label: 'Japanese', value: 'ja' },
+        { label: 'Korean', value: 'ko' },
+        { label: 'Russian', value: 'ru' },
+        { label: 'Dutch', value: 'nl' },
+        { label: 'Arabic', value: 'ar' },
+        { label: 'Hindi', value: 'hi' },
+        { label: 'Bengali', value: 'bn' },
+        { label: 'Polish', value: 'pl' }
+    ]
+    
+    @track selectedLanguage = 'en';
+    @track MenuComponents = [
         // { id: 1, label: 'About Response', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
         // { id: 2, label: 'On Behalf Of', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
         // { id: 3, label: 'Red Cross Responders', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 4, label: 'Virtual Response', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 5, label: 'Language', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 6, label: 'Basic Client Information', progress: 0, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 7, label: 'Event', progress: 100, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 8, label: 'Primary Client', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 9, label: 'Client’s Household', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 10, label: 'Shelter', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 11, label: 'Finish Draft', progress: 75, isExpanded: false, icon: 'utility:chevronright' },
-        // { id: 12, label: 'Red Cross Assistance', progress: 75, isExpanded: false, icon: 'utility:chevronright' }
     ];
 
-    @track subSections = [
-        // { id: 1, label: 'Subsection 1',progress:30},
-        // { id: 2, label: 'Subsection 2',progress:55},
-        // { id: 3, label: 'Subsection 3',progress:90}
-    ];
+    handleLanguageChange(event){
+        this.selectedLanguage = event.detail.value;
+        console.log('selected lang= ',this.selectedLanguage);
+    }
 
     handleOpenModal() {
         this.isModalOpen = true;
-        fetchMenu().then(result=>{
-            this.sections = result.map(record=>{
-                return {...record,progress: 75, isExpanded: false, icon: 'utility:chevronright',subSections:[]}
+        fetchMenuWithSubSections({'selectedLanguage':this.selectedLanguage}).then(result=>{
+            console.log('before - ',result)
+            this.MenuComponents = result.map(record=>{
+                return {...record,progress: 75, isExpanded: false, icon: 'utility:chevronright'}
             })
             console.log('menu = ',result); 
         });
-
-        fetchSubSection().then(result=>{
-            console.log('subSections = ',result);
-            for(let menu of this.sections)
-                for(let obj of result){
-                    if(menu.id == obj['Menu id']){
-                        menu.subSections.push({...obj, progress: 70});
-                        // menu.isExpanded  = true;
-                    }
-                   if(obj.Sections){
-                    console.log(obj.Sections)
-                    let labels = obj.Sections.split(',');
-                    for(let label of labels){
-                        menu.subSections.push({...obj, progress: 70, label:label.trim()});
-                        // menu.isExpanded  = true;
-                        // console.log('menu = ',menu);
-                        // console.log('label = ',label.trim());
-                    }
-                   }
-                   
-                }
             
-            });
-            
-        
     }
+
 
     handleCloseModal() {
         this.isModalOpen = false;
@@ -66,12 +53,12 @@ export default class ModalComponent extends LightningElement {
     toggleExpand(event) {
         const sectionId = event.target.dataset.id;
         console.log('sectionId',sectionId);
-        this.sections = this.sections.map((section) => {
-            if (section.id == sectionId && section.subSections.length>0) {
-                section.isExpanded = !section.isExpanded;
-                section.icon = section.isExpanded ? 'utility:chevrondown' : 'utility:chevronright';
+        this.MenuComponents = this.MenuComponents.map((MenuComponent) => {
+            if (MenuComponent.id == sectionId && MenuComponent.subSections.length>0) {
+                MenuComponent.isExpanded = !MenuComponent.isExpanded;
+                MenuComponent.icon = MenuComponent.isExpanded ? 'utility:chevronup' : 'utility:chevronright';
             }
-            return section;
+            return MenuComponent;
         });
     }
 }
