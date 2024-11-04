@@ -1,7 +1,8 @@
 public with sharing class fetchMetadata {
     @AuraEnabled(cacheable=true)
-    public static List<Map<String, Object>> fetchMenuWithSubSections(string selectedLanguage) {
+    public static List<Map<String, Object>> fetchMenuWithSubSections() {
         try {
+            string selectedLanguage = UserInfo.getLanguage();
             // Fetch the metadata records of Menu__mdt and subSection__mdt
             List<Menu__mdt> menuRecords = [SELECT Id, MasterLabel, Order__c,Active__c,Custom_Label__c FROM Menu__mdt where Active__c=TRUE ORDER BY Order__c ASC];
             List<subSection__mdt> subSectionRecords = [
@@ -42,8 +43,10 @@ public with sharing class fetchMetadata {
                             list<string> subSections = subSection.Sections__c.split(',');
                             for(integer i=0;i<subSections.size();i++){
                                 subSectionList.add(new Map<String, Object>{
-                                    'label'=>subSections[i]
+                                    'label'=>subSections[i],
+                                    'isSubSection'=>'Yes'
                                 });
+                               
                             }
                         }
                         // Add subsection to the list

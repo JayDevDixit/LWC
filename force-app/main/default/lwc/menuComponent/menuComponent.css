@@ -1,5 +1,9 @@
 .slds-modal__container {
     width: 20rem;
+    position: absolute; /* Make sure it uses absolute positioning */
+    top: 50%; /* Center vertically in the viewport */
+    left: 0; /* Align to the left of the viewport */
+    transform: translateY(-50%); /* Adjust vertical position to truly center it */
 }
 
 .logo {

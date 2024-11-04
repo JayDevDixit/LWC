@@ -1,0 +1,67 @@
+<template>
+    <div class="slds-page-header">
+      <div class="slds-page-header__action">
+        <lightning-button label="Search for Jobs" variant="brand" onclick={searchJobs} ></lightning-button>
+        <lightning-button label="Sign In" variant="brand" onclick={signIn}></lightning-button>
+      </div>
+    </div>
+    <div class="slds-grid slds-wrap">
+      <div class="slds-col slds-size_1-of-2">
+        <div class="slds-box">
+          <div class="slds-form-element slds-form-element_search">
+            <lightning-input placeholder="Full Name" onchange={handleSearch} class="FullName"></lightning-input>
+          </div>
+          <div class="slds-form-element">
+            <lightning-input 
+                label="Date of Birth" 
+                type="date" 
+                onchange={handleInputChange} 
+                data-id="dateOfBirth"
+                class="DateofBirth">
+            </lightning-input>
+        </div>
+        <div class="slds-form-element">
+            <lightning-input 
+                label="Pre-disaster Address" 
+                placeholder="Enter pre-disaster address" 
+                onchange={handleInputChange} 
+                data-id="preDisasterAddress"
+                class="Pre-disasterAddress">
+            </lightning-input>
+        </div>
+        <div class="slds-form-element">
+            <lightning-combobox 
+                label="Residency Status" 
+                placeholder="Select residency status" 
+                options={residencyOptions} 
+                onchange={handleInputChange} 
+                data-id="residency"
+                class="Residency">
+            </lightning-combobox>
+        </div>
+    </div>
+</div>
+
+          <div class="slds-form-element slds-form-element_compound">
+            <lightning-combobox name="distance" label="Distance or Location" value={distance} options={distanceOptions} onchange={handleDistanceChange} ></lightning-combobox>
+            <lightning-combobox name="timeType" label="Time Type" value={timeType} options={timeTypeOptions} onchange={handleTimeTypeChange} ></lightning-combobox>
+            <lightning-combobox name="remoteType" label="Remote Type" value={remoteType} options={remoteTypeOptions} onchange={handleRemoteTypeChange} ></lightning-combobox>
+          </div>
+        </div>
+      
+      <div class="slds-col slds-size_1-of-2">
+        <div class="slds-card">
+          <div class="slds-card__header">
+            <h2 class="slds-card__header-title">About Us</h2>
+          </div>
+          <div class="slds-card__body">
+            <div class="slds-align_absolute-center">
+              <div class="slds-icon-container">
+                <!-- <lightning-icon  alternativeText="Red Cross Logo" size="large" ></lightning-icon> -->
+              </div> <p class="slds-text-body_regular">The American Red Cross is a humanitarian organization that provides emergency assistance, disaster relief, and education inside the United States.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </template>

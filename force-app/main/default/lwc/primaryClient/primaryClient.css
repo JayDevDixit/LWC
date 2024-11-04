@@ -1,0 +1,66 @@
+.slds-page-header__title-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4A90E2; /* Dark blue for a professional look */
+    text-align: center;
+}
+
+.slds-page-header__action {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.slds-grid {
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.slds-box {
+    background-color: #f3f2f2;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.slds-form-element_compound {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.slds-form-element_search {
+    margin-bottom: 1rem;
+}
+
+.slds-card {
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.slds-card__header-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4A90E2;
+    text-align: center;
+}
+
+.slds-card__body {
+    font-size: 1rem;
+    color: #333333;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.slds-align_absolute-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slds-text-body_regular {
+    max-width: 80%;
+    margin-top: 1rem;
+}

@@ -1,0 +1,32 @@
+.red-cross-responder {
+    background-color: #f7f7f7; /* Light gray background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 2rem; /* Padding inside the component */
+    max-width: 600px; /* Maximum width for the component */
+    margin: 2rem auto; /* Center the component with margin */
+    text-align: center; /* Center text */
+}
+
+.header {
+    margin-bottom: 1.5rem; /* Space below header */
+}
+
+.title {
+    font-size: 2rem; /* Title font size */
+    font-weight: bold; /* Bold title */
+    color: #c8102e; /* Red color for Red Cross theme */
+}
+
+.description {
+    font-size: 1rem; /* Description font size */
+    color: #555; /* Dark gray color for text */
+    line-height: 1.5; /* Line height for readability */
+    margin-bottom: 1.5rem; /* Space below description */
+}
+
+.button-container {
+    display: flex; /* Use flexbox to align buttons */
+    justify-content: center; /* Center the buttons */
+    gap: 1rem; /* Space between buttons */
+}
