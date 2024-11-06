@@ -1,0 +1,48 @@
+<template>
+    <lightning-card title="Create Animals Record ---->" icon-name="standard:contact">
+        <div class="slds-p-around_medium">
+            <lightning-input
+                label="First Name"
+                value={firstName}
+                onchange={handleInputChange}
+                data-id="name"
+                required>
+            </lightning-input>
+
+            <lightning-input
+                label="Last Name"
+                value={lastName}
+                onchange={handleInputChange}
+                data-id="lastName"
+                required>
+            </lightning-input>
+
+            <lightning-input
+                label="Age"
+                type="number"
+                value={age}
+                onchange={handleInputChange}
+                data-id="age"
+                min="0"
+                required>
+            </lightning-input>
+
+            <lightning-combobox
+                label="Gender"
+                placeholder="Select Gender"
+                options={genderOptions}
+                value={gender}
+                onchange={handleInputChange}
+                data-id="gender"
+                required>
+            </lightning-combobox>
+
+            <lightning-button
+                label="Save"
+                onclick={createAnimalsRecord}
+                variant="brand"
+                class="slds-m-top_medium">
+            </lightning-button>
+        </div>
+    </lightning-card>
+</template>
