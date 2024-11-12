@@ -1,0 +1,33 @@
+.card-content {
+    background-color: yellow;
+    padding: 16px; /* Add padding to align with card styles */
+    border-radius: 4px; /* Optional, to match card corner radius */
+}
+.one{
+    font-size: 40px;
+    font-family: cursive;
+    font-weight: bold;
+    color: red;
+    background-color: greenyellow;
+    padding: 5px;
+    border: 20px solid greenyellow;
+    text-align: center;
+    margin: 5px;
+}
+.firstColumn {
+    background-color: red;
+    color: white; /* Optional - text color */
+    font-size: 20px !important; /* Increase font size */
+}
+
+.secondColumn {
+    background-color: yellow;
+    color: black; /* Optional - text color */
+    font-size: 20px !important; /* Increase font size */
+}
+
+.thirdColumn {
+    background-color: green;
+    color: white; /* Optional - text color */
+    font-size: 20px !important; /* Increase font size */
+}

@@ -35,7 +35,7 @@ export default class ModalComponent extends LightningElement {
         fetchMenuWithSubSections().then(result=>{
             console.log('before - ',result)
             this.MenuComponents = result.map(record=>{
-                return {...record,progress: 75, isExpanded: false, icon: 'utility:chevronright'}
+                return {...record,progress:20, isExpanded: false, icon: 'utility:chevronright'}
             })
             console.log('menu = ',result); 
         });
@@ -44,6 +44,7 @@ export default class ModalComponent extends LightningElement {
 
     handleCloseModal() {
         this.isModalOpen = false;
+        console.log(JSON.stringify(this.MenuComponents));
     }
 
     toggleExpand(event) {

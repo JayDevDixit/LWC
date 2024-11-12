@@ -36,7 +36,7 @@
                     <ul class="slds-list_vertical slds-has-dividers_top-space">
                         <template for:each={MenuComponents} for:item="MenuComponent">
                             <li key={MenuComponent.id} class="slds-item list-item font">
-                                    <lightning-progress-ring value={MenuComponents.progress} variant="active-step"></lightning-progress-ring>
+                                    <lightning-progress-ring value={MenuComponent.progress} variant="active-step"></lightning-progress-ring>
                                     <button class="slds-button slds-button_neutral slds-button_full-width" onclick={toggleExpand} data-id={MenuComponent.id} value={MenuComponent.label}>
                                         {MenuComponent.label}
                                         <lightning-icon icon-name={MenuComponent.icon} size="xx-small" class="slds-float_right arrow"></lightning-icon>
