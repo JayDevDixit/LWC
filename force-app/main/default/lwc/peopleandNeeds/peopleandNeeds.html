@@ -1,3 +1,83 @@
 <template>
-    <h1>People and needs component</h1>
+    <lightning-card title="People Information and Needs Form">
+        <div class="slds-p-around_medium">
+            <!-- Name Input -->
+            <lightning-input 
+                label="Name" 
+                value={name} 
+                onchange={handleInputChange} 
+                data-id="name" 
+                required>
+            </lightning-input>
+
+            <!-- Age Input -->
+            <lightning-input 
+                label="Age" 
+                value={age} 
+                type="number" 
+                onchange={handleInputChange} 
+                data-id="age" 
+                required>
+            </lightning-input>
+
+            <!-- Email Input -->
+            <lightning-input 
+                label="Email" 
+                value={email} 
+                type="email" 
+                onchange={handleInputChange} 
+                data-id="email" 
+                required>
+            </lightning-input>
+
+            <!-- Phone Input -->
+            <lightning-input 
+                label="Phone Number" 
+                value={phone} 
+                type="tel" 
+                onchange={handleInputChange} 
+                data-id="phone" 
+                required>
+            </lightning-input>
+
+            <!-- Address Input -->
+            <lightning-textarea 
+                label="Address" 
+                value={address} 
+                onchange={handleInputChange} 
+                data-id="address" 
+                required>
+            </lightning-textarea>
+
+            <!-- Needs Description Input -->
+            <lightning-textarea 
+                label="Needs Description" 
+                value={needsDescription} 
+                onchange={handleInputChange} 
+                data-id="needsDescription" 
+                required>
+            </lightning-textarea>
+
+            <!-- Submit Button -->
+            <lightning-button 
+                label="Submit" 
+                variant="brand" 
+                class="slds-m-top_medium"
+                onclick={handleSubmit}>
+            </lightning-button>
+
+            <!-- Display submitted data -->
+            <template if:true={formSubmitted}>
+                <div class="slds-m-top_medium">
+                    <p><strong>Submitted Information:</strong></p>
+                    <p>Name: {name}</p>
+                    <p>Age: {age}</p>
+                    <p>Email: {email}</p>
+                    <p>Phone: {phone}</p>
+                    <p>Address: {address}</p>
+                    <p>Needs Description: {needsDescription}</p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
 </template>

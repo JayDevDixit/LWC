@@ -1,3 +1,0 @@
-<aura:component implements="lightning:isUrlAddressable">
-  <c:primaryClient></c:primaryClient>
-</aura:component>
