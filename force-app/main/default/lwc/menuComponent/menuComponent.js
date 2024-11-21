@@ -5,6 +5,7 @@ import { subscribe,MessageContext } from 'lightning/messageService';
 import COMPONENT_COMMUNICATION_CHANNEL from '@salesforce/messageChannel/ComponentCommunicationChannel__c';
 
 export default class ModalComponent extends LightningElement {
+  @api recordId;
   @wire(MessageContext)
   messageContext;
     @track isModalOpen = false;
@@ -21,7 +22,6 @@ export default class ModalComponent extends LightningElement {
       focus:'',
       menuIndex : undefined,
       subSectionIndex : undefined,
-
     }
     @track showComponent = {
       'showPrimaryClient':false,
@@ -29,6 +29,9 @@ export default class ModalComponent extends LightningElement {
     subscription = null;
     receivedMessage = 'No message received'
     connectedCallback(){
+  console.log('childprops=',JSON.stringify(this.childProps))
+
+      console.log('Record id = ',this.recordId)
       if(!this.subscription){
         this.subscription = subscribe(
           this.messageContext,
@@ -51,16 +54,16 @@ export default class ModalComponent extends LightningElement {
     }
 
     navigateToOtherComponent(event){
-      console.log(event.target);
+      // console.log(event.target);
       let buttonLabel = event.target.innerText;
       buttonLabel = 'show'+buttonLabel.replace(/\s+/g, '');
-      console.log('buttonLabel',buttonLabel)
+      // console.log('buttonLabel',buttonLabel)
       this.showComponent[buttonLabel] = true;
       this.isModalOpen = false;
     }
     handleLanguageChange(event){
         this.selectedLanguage = event.detail.value;
-        console.log('selected lang= ',this.selectedLanguage);
+        // console.log('selected lang= ',this.selectedLanguage);
     }
 
     handleOpenModal() {
@@ -68,7 +71,7 @@ export default class ModalComponent extends LightningElement {
         if(!this.isClicked){
           this.isClicked = true;
           fetchMenuWithSubSections().then(result=>{
-            console.log('before - ',result)
+            // console.log('before - ',result)
             this.MenuComponents = result.map((record,index)=>{
               let i = 0;
               let subSections = [];
@@ -76,10 +79,10 @@ export default class ModalComponent extends LightningElement {
                 subSections.push({...subSection,index:i, progress:0});
                 i+=1;
               }
-              console.log('Subsections = ',record.subSections,Array.isArray(record.subSections));
+              // console.log('Subsections = ',record.subSections,Array.isArray(record.subSections));
                 return {...record,progress:0, isExpanded: false, icon: 'utility:chevronright',index,subSections}
             })
-            console.log('menu = ',result); 
+            // console.log('menu = ',result); 
         });
         }
     }
@@ -91,7 +94,7 @@ export default class ModalComponent extends LightningElement {
     }
 
     toggleExpand(event) {
-      console.log('toggle expand called')
+      // console.log('toggle expand called')
         const sectionId = event.target.dataset.id;
         // console.log('sectionId',sectionId);
         this.MenuComponents = this.MenuComponents.map((MenuComponent) => {
@@ -105,37 +108,37 @@ export default class ModalComponent extends LightningElement {
     navigateToComponent(event) {
       this.childProps['menuIndex'] = undefined;
       this.childProps['subSectionIndex'] = undefined;
-      console.log(event.target);
+      // console.log(event.target);
       let buttonLabel = event.target.innerText;
       buttonLabel = buttonLabel.replace(/\s+/g, '');
-      console.log('buttonLabel',buttonLabel)
+      // console.log('buttonLabel',buttonLabel)
       // this.showComponent[buttonLabel] = true;
       this.isModalOpen = false;
-      console.log('before load comp')
+      // console.log('before load comp')
       let targetComponent;
       for(let component of this.MenuComponents){
           for(let section of component.subSections)
             if(section.label.replace(/\s+/g, '') == buttonLabel){
               if(section.isSubSection == 'Yes'){
                 targetComponent = component.label.replace(/\s+/g, '');
-                console.log('--------')
+                // console.log('--------')
                 this.childProps['focus'] = buttonLabel;
                 this.childProps['menuIndex'] = component.index;
                 this.childProps['subSectionIndex'] = section.index;
                 break;
               }else{
                 targetComponent = section.label.replace(/\s+/g, '');
-                console.log('+++++++++++++')
+                // console.log('+++++++++++++')
                 this.childProps['menuIndex'] = component.index;
                 this.childProps['subSectionIndex'] = section.index;
                 break;
               }
             }
       }
-      console.log('targetComponent',targetComponent);
+      // console.log('targetComponent',targetComponent);
       this.targetComponent = targetComponent.charAt(0).toLowerCase() + targetComponent.slice(1)
-      console.log('targetComponent',targetComponent);
-      console.log('focus',this.childProps['focus']);
+      // console.log('targetComponent',targetComponent);
+      // console.log('focus',this.childProps['focus']);
       this.loadComponent(this.targetComponent);
 
     //   let cmpDef = {
@@ -168,17 +171,19 @@ export default class ModalComponent extends LightningElement {
 // }
 
 click(event){
-  console.log('click called');
+  // console.log('click called');
   this.isClicked = true;
    this.MenuComponents[0] = {...this.MenuComponents[0],progress:100};
-  console.log('progress=',JSON.stringify(this.MenuComponents[0]));
+  // console.log('progress=',JSON.stringify(this.MenuComponents[0]));
 }
 
 
 async loadComponent(componentName){
-  console.log('loadcomp called')
-  console.log('menuindex = ',this.childProps['menuIndex'])
-  console.log('submenuindex = ',this.childProps['subSectionIndex'])
+  // console.log('loadcomp called')
+  // console.log('menuindex = ',this.childProps['menuIndex'])
+  // console.log('submenuindex = ',this.childProps['subSectionIndex'])
+  this.childProps['recordId'] = this.recordId;
+  // console.log('childprops=',JSON.stringify(this.childProps))
   import(`c/${componentName}`)
   .then(({ default: ctor }) => (this.componentConstructor = ctor))
   .catch((err) => console.error("Error importing component"));

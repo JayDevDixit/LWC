@@ -2,25 +2,28 @@
     <lightning-card title="Create Animals Record ---->" icon-name="standard:contact">
         <div class="slds-p-around_medium">
             <lightning-input
+                onblur={createAnimalsRecord}
                 label="First Name"
-                value={firstName}
+                value={animalData.Name}
                 onchange={handleInputChange}
-                data-id="name"
+                data-id="Name"
                 required>
             </lightning-input>
 
             <lightning-input
+                onblur={createAnimalsRecord}
                 label="Last Name"
-                value={lastName}
+                value={animalData.lastName}
                 onchange={handleInputChange}
                 data-id="lastName"
                 required>
             </lightning-input>
 
             <lightning-input
+                onblur={createAnimalsRecord}
                 label="Age"
                 type="number"
-                value={age}
+                value={animalData.age}
                 onchange={handleInputChange}
                 data-id="age"
                 min="0"
@@ -28,10 +31,11 @@
             </lightning-input>
 
             <lightning-combobox
+                onblur={createAnimalsRecord}
                 label="Gender"
                 placeholder="Select Gender"
                 options={genderOptions}
-                value={gender}
+                value={animalData.gender}
                 onchange={handleInputChange}
                 data-id="gender"
                 required>
